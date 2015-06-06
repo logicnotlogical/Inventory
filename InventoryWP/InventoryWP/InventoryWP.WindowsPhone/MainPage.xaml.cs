@@ -49,5 +49,10 @@ namespace InventoryWP
         {
             this.Frame.Navigate(typeof(QRScan));
         }
+
+        private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ItemsOut));
+        }
     }
 }

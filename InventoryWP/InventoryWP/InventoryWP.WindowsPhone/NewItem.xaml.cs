@@ -4,13 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.ApplicationModel;
-using Windows.Devices.Enumeration;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Graphics.Display;
-using Windows.Media.Capture;
-using Windows.Media.MediaProperties;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -27,12 +23,12 @@ namespace InventoryWP
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class QRScan : Page
+    public sealed partial class NewItem : Page
     {
         private NavigationHelper navigationHelper;
         private ObservableDictionary defaultViewModel = new ObservableDictionary();
 
-        public QRScan()
+        public NewItem()
         {
             this.InitializeComponent();
 
@@ -69,16 +65,8 @@ namespace InventoryWP
         /// <see cref="Frame.Navigate(Type, Object)"/> when this page was initially requested and
         /// a dictionary of state preserved by this page during an earlier
         /// session.  The state will be null the first time a page is visited.</param>
-        async private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
+        private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
-            try
-            {
-                if (captureMgr.MediaCaptureSettings != null)
-                {
-                    await captureMgr.StartPreviewAsync();
-                }
-            }
-            catch (Exception) { };
         }
 
         /// <summary>
@@ -89,9 +77,8 @@ namespace InventoryWP
         /// <param name="sender">The source of the event; typically <see cref="NavigationHelper"/></param>
         /// <param name="e">Event data that provides an empty dictionary to be populated with
         /// serializable state.</param>
-        async private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
+        private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
-            await captureMgr.StopPreviewAsync();
         }
 
         #region NavigationHelper registration
@@ -120,49 +107,5 @@ namespace InventoryWP
         }
 
         #endregion
-
-        MediaCapture captureMgr = new MediaCapture();
-
-        async private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            var CameraID = await GetCameraID(Windows.Devices.Enumeration.Panel.Back);            
-            await captureMgr.InitializeAsync(new MediaCaptureInitializationSettings
-            {
-                StreamingCaptureMode = StreamingCaptureMode.Video,
-                PhotoCaptureSource = PhotoCaptureSource.Photo,
-                AudioDeviceId = string.Empty,
-                VideoDeviceId = CameraID.Id
-            });
-            captureMgr.SetPreviewRotation(VideoRotation.Clockwise90Degrees);
-            CapturePreview.Source = captureMgr;
-            CapturePreview.Height = ContentRoot.Height;
-
-            var maxResolution = captureMgr.VideoDeviceController.GetAvailableMediaStreamProperties(MediaStreamType.Photo).Aggregate((i1, i2) => (i1 as VideoEncodingProperties).Width > (i2 as VideoEncodingProperties).Width ? i1 : i2);
-            await captureMgr.VideoDeviceController.SetMediaStreamPropertiesAsync(MediaStreamType.Photo, maxResolution);
-
-            await captureMgr.StartPreviewAsync();
-        }
-
-        /// <summary>
-        /// Find a camera with specified name. Source: http://www.romasz.net/how-to-take-a-photo-in-windows-runtime/
-        /// </summary>
-        /// <param name="desired">The enumeration of the desired device.</param>
-        /// <returns>A camera id.</returns>
-        private static async System.Threading.Tasks.Task<DeviceInformation> GetCameraID(Windows.Devices.Enumeration.Panel desired)
-        {
-            // get available devices for capturing pictures
-            DeviceInformation deviceID = (await DeviceInformation.FindAllAsync(DeviceClass.VideoCapture)).FirstOrDefault(x => x.EnclosureLocation != null && x.EnclosureLocation.Panel == desired);
-
-            if (deviceID != null) return deviceID;
-            else throw new Exception(string.Format("Camera of type {0} doesn't exist.", desired));
-        }
-
-        async private void Page_Unloaded(object sender, RoutedEventArgs e)
-        {
-            await captureMgr.StopPreviewAsync();
-            captureMgr.Dispose();
-        }
-
     }
-
 }
