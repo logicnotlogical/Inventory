@@ -35,6 +35,10 @@ namespace InventoryWP
             this.navigationHelper = new NavigationHelper(this);
             this.navigationHelper.LoadState += this.NavigationHelper_LoadState;
             this.navigationHelper.SaveState += this.NavigationHelper_SaveState;
+
+            ComboCategory.Items.Add("Electricals");
+            ComboCategory.Items.Add("Utilities");
+            ComboCategory.Items.Add("Other");
         }
 
         /// <summary>
@@ -67,6 +71,15 @@ namespace InventoryWP
         /// session.  The state will be null the first time a page is visited.</param>
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
+            if (e.NavigationParameter != null)
+            {
+                if (e.NavigationParameter.GetType() == typeof(List<string>))
+                {
+                    var newItem = e.NavigationParameter as List<string>;
+                    TextName.Text = newItem[0];
+                    ComboCategory.SelectedValue = newItem[1];
+                }
+            }
         }
 
         /// <summary>
@@ -107,5 +120,10 @@ namespace InventoryWP
         }
 
         #endregion
+
+        private void ButtonBarCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationHelper.GoBack(); 
+        }
     }
 }

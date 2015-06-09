@@ -27,18 +27,26 @@
 
         <!--TODO: Content should be placed within the following grid-->
         <StackPanel Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
-            <StackPanel Tapped="StackPanel_Tapped">
+            <StackPanel>
                 <TextBlock Style="{StaticResource BodyTextBlockStyle}">ITEMS OUT:</TextBlock>
-                <TextBlock Style="{StaticResource HeaderTextBlockStyle}">99</TextBlock>
+                <HyperlinkButton FontSize="48">99</HyperlinkButton>
             </StackPanel>
-                
-            <TextBlock Style="{StaticResource BodyTextBlockStyle}">ITEMS TOTAL:</TextBlock>
-            <TextBlock Style="{StaticResource HeaderTextBlockStyle}">999</TextBlock>
+            
+            <StackPanel>
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">ITEMS TOTAL:</TextBlock>
+                <HyperlinkButton FontSize="48">999</HyperlinkButton>
+            </StackPanel>
+            
+            <StackPanel>
+                <HyperlinkButton>check items out</HyperlinkButton>
+                <HyperlinkButton>check items in</HyperlinkButton>
+                <HyperlinkButton>view all items</HyperlinkButton>
+            </StackPanel>
         </StackPanel>
     </Grid>
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Name="BarNewItem" Icon="Add" Label="New Item"/>
+            <AppBarButton Name="BarNewItem" Icon="Add" Label="New Item" Click="BarNewItem_Click"/>
             <AppBarButton Name="BarQRScanButton" Icon="Camera" Label="QR Reader" Click="QRScanButton_Click"/>
         </CommandBar>
     </Page.BottomAppBar>

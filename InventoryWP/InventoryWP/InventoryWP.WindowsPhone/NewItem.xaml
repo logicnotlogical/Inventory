@@ -23,13 +23,35 @@
 
         <!-- Title Panel -->
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
-            <TextBlock Text="MY APPLICATION" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
-            <TextBlock Text="page title" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+            <TextBlock Text="INVENTORY" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
+            <TextBlock Text="new item" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
         </StackPanel>
 
         <!--TODO: Content should be placed within the following grid-->
-        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
+        <StackPanel Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
+                <TextBlock Style="{StaticResource BodyTextBlockStyle}">NAME</TextBlock>
+            <TextBox x:Name="TextName"/>
+            
+            <StackPanel x:Name="nameWarning" Background="#FF890000" Visibility="Collapsed">
+                    <TextBlock Style="{StaticResource BaseTextBlockStyle}">Is this item the same as [itemname]?</TextBlock>
+                <HyperlinkButton>Yes, use that item instead.</HyperlinkButton>
+            </StackPanel>
+            
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="QUANTITY"/>
+            <TextBox x:Name="TextQuantity" InputScope="Number"/>
 
-        </Grid>
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="CATEGORY"/>
+            <ComboBox x:Name="ComboCategory"/>
+
+            <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="You can generate a QR code to recognise this item, if you wish."/>
+            <Button HorizontalAlignment="Stretch" Margin="3,0,0,0" Content="GENERATE QR" />
+        </StackPanel>
+
     </Grid>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Name="ButtonBarSave" Label="Save" Icon="Save"/>
+            <AppBarButton x:Name="ButtonBarCancel" Label="Cancel" Icon="Cancel" Click="ButtonBarCancel_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 </Page>

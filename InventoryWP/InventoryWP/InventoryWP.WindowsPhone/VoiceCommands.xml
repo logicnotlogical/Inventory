@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VoiceCommands xmlns="http://schemas.microsoft.com/voicecommands/1.1">
+  <CommandSet xml:lang="en-gb" Name="InventoryCommandSet_en-gb">
+    <CommandPrefix>Inventory, </CommandPrefix>
+    <Example> show all my items</Example>
+
+    <Command Name="ShowAllItems">
+      <Example> show all my items</Example>
+      <ListenFor> show [all] my items</ListenFor>
+      <Feedback>Showing all your items...</Feedback>
+      <Navigate />
+    </Command>
+
+    <Command Name="AddNewItem">
+      <Example> add mobile phone</Example>
+      <ListenFor> add {item}</ListenFor>
+      <Feedback>Adding {item} to your inventory...</Feedback>
+      <Navigate/>     
+    </Command>
+
+    <Command Name="AddNewItemToCategory">
+      <Example> add mobile phone to category electricals</Example>
+      <ListenFor> add {item} to category {category}</ListenFor>
+      <Feedback>Adding {item} to category {category}</Feedback>
+      <Navigate />
+    </Command>
+
+    <PhraseList Label="category">
+      <Item> electricals </Item>
+      <Item> utilities </Item>
+      <Item> other </Item>
+    </PhraseList>
+    
+    <PhraseTopic Label="item" Scenario="Search"/>
+    <!--<PhraseTopic Label="category" Scenario="Search"/>-->
+
+  </CommandSet>
+</VoiceCommands>

@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.Media.SpeechRecognition;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -50,9 +51,9 @@ namespace InventoryWP
             this.Frame.Navigate(typeof(QRScan));
         }
 
-        private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        private void BarNewItem_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(ItemsOut));
+            this.Frame.Navigate(typeof(NewItem));
         }
     }
 }
